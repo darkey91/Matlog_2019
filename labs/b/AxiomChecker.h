@@ -10,7 +10,6 @@
 
 class AxiomChecker {
 public:
-
     const static size_t N_AXIOM = 10, MAX_LEAVES = 7;
 
     /** returns the number of presumed axiom, if structure of node tree is
