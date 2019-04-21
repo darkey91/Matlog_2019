@@ -81,6 +81,7 @@ public :
     }
 
 private :
+
     void init() {
         cur_token = BEGIN;
         pointer = 0;
@@ -320,8 +321,7 @@ private:
         }
     }
 
-    const std::vector<std::string> negation = {
-                                            "A",
+    const std::vector<std::string> negation = {"A",
                                             "(A -> (!A -> A))",
                                             "(!A -> A)",
                                             "(!A -> (!A -> !A))",
@@ -460,6 +460,7 @@ private:
         "(!!(A -> B) -> (A -> !!(A -> B)))",
         "((!!(A -> B) -> (A -> !!(A -> B))) -> (!B -> (!!(A -> B) -> (A -> !!(A -> B)))))",
         "(!B -> (!!(A -> B) -> (A -> !!(A -> B))))",
+        "!!(A -> B)",
         "(!!(A -> B) -> (!B -> !!(A -> B)))",
         "(!B -> !!(A -> B))",
         "((!B -> !!(A -> B)) -> ((!B -> (!!(A -> B) -> (A -> !!(A -> B)))) -> (!B -> (A -> !!(A -> B)))))",
@@ -473,6 +474,7 @@ private:
         "(!B -> !A)",
         "((!B -> !A) -> ((!B -> !!A) -> !!B))",
         "(!!A -> (!B -> !!A))",
+        "!!A",
         "(!B -> !!A)",
         "((!B -> !!A) -> !!B)",
         "!!B"
@@ -572,6 +574,7 @@ public:
         std::cout << "\n";
         run();
     }
+
 private:
     Intuit intuit;
     typedef std::unique_ptr<expression_wrapper> pWrapper;
@@ -584,6 +587,10 @@ private:
             builder.parse();
             checker.set_kth_axiom_tree(i, builder.root);
         }
+    }
+
+    bool correct() {
+        return wrappers.back()->hash == proposal->getHash() && wrappers.back()->isProved;
     }
 
     void set_data() {
@@ -640,7 +647,7 @@ private:
             wrapper->number_in_old_proof = index;
             wrapper->hash = hash;
 
-            auto found_hypothesis = check_hyp.find(hash);
+            auto found_hypothesis = check_hyp.find(ast_old_proof[index]->getHash());
 
             if (found_hypothesis != check_hyp.end()) {
                 fill_proved_wrapper(ast_old_proof[index], wrapper, index, HYPOTHESIS, (int) found_hypothesis->second.second, -1, -1);
@@ -651,8 +658,8 @@ private:
                     fill_proved_wrapper(ast_old_proof[index], wrapper, index, AXIOM, axiom_number, -1, -1);
                     intuit.print_NEG(ast_old_proof[index]);
                 } else if (axiom_number == 10) {
-                     fill_proved_wrapper(ast_old_proof[index], wrapper, index, AXIOM, axiom_number, -1, -1);
-                     intuit.print_AXIOM(ast_old_proof[index]->right);
+	             fill_proved_wrapper(ast_old_proof[index], wrapper, index, AXIOM, axiom_number, -1, -1);
+                     intuit.print_AXIOM(ast_old_proof[index]->getRightNode());
                 } else {
                     //протеверяю  mp ли this
                     auto right_subtree = right_set.find(hash);
@@ -668,7 +675,6 @@ private:
                         }
                         if (left != nullptr) {
                             intuit.print_MP(ast_old_proof[left->number_in_old_proof], ast_old_proof[index]);
-
                             hash_of_whole_tree += (P_left * left->hash);
                             auto pair_wrp = proved.find(hash_of_whole_tree);
 
@@ -688,6 +694,7 @@ private:
             wrappers.emplace_back(std::move(wrapper));
         }
     }
+
 
     void fill_proved_wrapper(const pNode &node, const pWrapper &wrapper, int index, enum came_from is, int axiom_number,
                              int prefix, int suffix) {

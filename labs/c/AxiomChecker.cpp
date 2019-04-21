@@ -70,10 +70,10 @@ const std::string & AxiomChecker::get_kth_axiom(size_t k) const {
 
 int AxiomChecker::find_axiom(const pNode &node) {
     for (int i = 0; i < N_AXIOM; ++i) {
-        int leafIndex = 0;
+        int childIndex = 0;
         // убери это нахрен, если тлится
         reset_hashes();
-        if (check(axiomTrees[i], node, i, leafIndex) && is_kth_axiom(i))
+        if (check(axiomTrees[i], node, i, childIndex) && is_kth_axiom(i))
             return i;
 
     }
