@@ -29,7 +29,7 @@ private:
                                              "B->A|B",
                                              "(A->B)->(C->B)->(A|C->B)",
                                              "(A->B)->(A->!B)->!A",
-                                             "!!A->A" };
+                                             "A->!A->B" };
 
     pNode axiomTrees[AxiomChecker::N_AXIOM];
 

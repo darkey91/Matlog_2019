@@ -1,0 +1,4 @@
+Y, C, P |- (!A->B|P|!KOL) -> (!A->!(B|P|!KOL)) -> !!A
+            H|U
+            L->P->W
+            (!A->B|P|!KOL) -> (!A->!(B|P|!KOL)) -> !!A

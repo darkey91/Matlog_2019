@@ -1,0 +1,32 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/darkey/univer/matlog/laba/main.cpp
+cassert
+-
+functional
+-
+cstring
+-
+unistd.h
+-
+cctype
+-
+variant
+-
+memory
+-
+fstream
+-
+iostream
+-
+sstream
+-
+numeric
+-
+
