@@ -1,3 +1,0 @@
-/home/darkey/univer/matlog/labs/b/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/darkey/univer/matlog/labs/b/cmake-build-debug/CMakeFiles/b.dir
-/home/darkey/univer/matlog/labs/b/cmake-build-debug/CMakeFiles/edit_cache.dir
